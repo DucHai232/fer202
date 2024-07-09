@@ -1,0 +1,5 @@
+.episode-list-container {
+    display: flex; /* Sử dụng Flexbox */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+  }
+  

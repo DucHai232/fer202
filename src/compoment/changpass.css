@@ -1,0 +1,68 @@
+/* changpass.css */
+
+.container1 {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+.form-group1 {
+    margin-bottom: 20px;
+}
+
+.form-control1 {
+    height: calc(2.25rem + 10px);
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control1:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary1 {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary1:hover {
+    background-color: #0056b3;
+}
+
+.form-label1 {
+    font-weight: bold;
+    color: #555;
+}
+
+@media (max-width: 576px) {
+    .container1 {
+        padding: 15px;
+    }
+    
+    .form-control1, .btn-primary1 {
+        font-size: 14px;
+    }
+}
+
+

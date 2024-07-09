@@ -1,0 +1,64 @@
+.login-container {
+    
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: #0e1b35; /* Màu nền xanh đậm */
+  }
+  
+  .poster-column {
+    margin-left:auto 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff; /* Màu nền trắng cho cột poster */
+
+  }
+  
+  .poster-image {
+    width: 100%;
+    height: auto;
+    
+  }
+  
+  .form-column {
+    margin-left:auto 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; /* Màu nền nhạt cho cột form */
+  }
+  
+  .form-wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background-color: #050505;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .login-button {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #ff7f50; /* Màu cam của nút */
+    border: none;
+  }
+  
+  .login-button:hover {
+    background-color: #e6733f; /* Màu cam khi hover */
+  }
+  
+  .forgot-password,
+  .signup-link {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
