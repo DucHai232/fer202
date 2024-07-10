@@ -8,3 +8,7 @@ export const getUser = () => {
 export const register = (data) => {
   return API.post("/user", data);
 };
+
+export const deleteUser = (userId) => {
+  return API.delete(`/user/${userId}`);
+};

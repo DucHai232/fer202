@@ -27,12 +27,12 @@ export default function Login() {
       const user = users.find((user) => user.email === formData.email);
       if (user) {
         if (user.password === formData.password) {
+          saveLocalstorage("user", user);
           if (user.isAdmin) {
             navigate("/admin");
           } else {
             navigate("/");
           }
-          saveLocalstorage("user", user);
         } else {
           alert("Email hoặc password không đúng");
         }

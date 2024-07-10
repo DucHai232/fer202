@@ -8,28 +8,22 @@ import Details from "../compoment/detail/Detail";
 import Watching from "../compoment/watching/Watching";
 import Search from "../compoment/Search";
 import { loadFromLocalstorage } from "../utils/LocalStorage";
+import RedirectLoggedInUser from "./RedirectLoggedInUser";
 
 const MainRoutes = () => {
-  const user = loadFromLocalstorage("user");
-  const isAdmin = user?.isAdmin;
   return (
     <>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/"
-          element={isAdmin ? <Navigate to={"/admin"} /> : <Home />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/" element={<RedirectLoggedInUser />} />
         <Route path="/chitiet">
           <Route path=":filmId" element={<Details />} />
           <Route path=":filmId/xem-phim" element={<Watching />} />
         </Route>
         <Route path="/search" element={<Search />} />
-        <Route
-          path="/admin"
-          element={isAdmin ? <Admin /> : <Navigate to="/" />}
-        />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -17,51 +17,33 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Admin.css"; // Custom CSS for styling
 import { removeLocalstorage } from "../../utils/LocalStorage";
 import { useNavigate } from "react-router-dom";
+import { deleteUser, getUser } from "../../apis/user.request";
 
 export default function Admin() {
   const navigate = useNavigate();
-  const users = [
-    {
-      avatar: "H",
-      name: "hghghg",
-      email: "demo@gmail.com",
-      phone: "0354654214",
-      role: "USER",
-      status: "Kích hoạt",
-      date: "14-06-2024",
-    },
-    {
-      avatar: "P",
-      name: "Phạm Đình Tiến",
-      email: "phamdinhtien@gmail.com",
-      phone: "0709732310",
-      role: "USER",
-      status: "Kích hoạt",
-      date: "13-04-2024",
-    },
-    {
-      avatar: "P",
-      name: "Phan Hải Tiến",
-      email: "phanhaitien@gmail.com",
-      phone: "0866793860",
-      role: "USER",
-      status: "Kích hoạt",
-      date: "13-04-2024",
-    },
-    {
-      avatar: "M",
-      name: "Mai Đạt Thiên",
-      email: "maidatthien@gmail.com",
-      phone: "0700990728",
-      role: "USER",
-      status: "Kích hoạt",
-      date: "13-04-2024",
-    },
-  ];
+  const [users, setUsers] = useState([]);
+  const [callback, setCallBack] = useState(false);
+  useEffect(() => {
+    const fetchDataUser = async () => {
+      const response = await getUser();
+      setUsers(response.data);
+    };
+    fetchDataUser();
+  }, [callback]);
   const handleLogout = () => {
     removeLocalstorage("user");
     navigate("/login");
   };
+
+  const handleDelete = async (userId) => {
+    console.log(userId);
+    const confirm = window.confirm("Bạn có muốn xóa không");
+    if (confirm) {
+      await deleteUser(userId);
+      setCallBack((prev) => !prev);
+    }
+  };
+  const handleUpdate = () => {};
   return (
     <Container fluid className="admin-container admin-container1">
       <Row className="header-row header-row1  align-items-center">
@@ -164,13 +146,11 @@ export default function Admin() {
           >
             <thead>
               <tr>
-                <th>Avatar</th>
                 <th>Họ tên</th>
                 <th>Email</th>
                 <th>Số điện thoại</th>
                 <th>Quyền</th>
                 <th>Trạng thái</th>
-                <th>Ngày tạo</th>
                 <th>Delete</th>
                 <th>Update</th>
               </tr>
@@ -178,27 +158,19 @@ export default function Admin() {
             <tbody>
               {users.map((user, index) => (
                 <tr key={index} className="table-row table-row1">
-                  <td>
-                    <div className="avatar-circle avatar-circle1">
-                      <span className="initials initials1">{user.avatar}</span>
-                    </div>
-                  </td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
-                  <td>{user.role}</td>
-                  <td
-                    className={
-                      user.status === "Kích hoạt"
-                        ? "text-success"
-                        : "text-warning"
-                    }
-                  >
-                    {user.status}
+                  <td>{user.isAdmin ? "ADMIN" : "USER"}</td>
+                  <td className={user.status ? "text-success" : "text-warning"}>
+                    {user.status ? "Kích hoạt" : "Không hoạt động"}
                   </td>
-                  <td>{user.date}</td>
-                  <td>Delete</td>
-                  <td>Update</td>
+                  <td onClick={() => handleDelete(user.id)}>
+                    <Button>Xóa</Button>
+                  </td>
+                  <td onClick={() => handleUpdate(user.id)}>
+                    <Button variant="warning">Sửa</Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
