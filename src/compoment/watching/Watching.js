@@ -11,29 +11,56 @@ import {
   ButtonGroup,
   Badge,
 } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MovieContent.css";
 import "./VideoPlayer.css";
 import "./EpisodeList.css";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { loadFromLocalstorage } from "../../utils/LocalStorage";
+import { getFilmData, postCommentFilm } from "../../apis/film.request";
+import { FaUserCircle } from "react-icons/fa";
 export default function Watching() {
-  const [comments, setComments] = useState([]);
+  const [callback, setCallback] = useState(false);
   const [newComment, setNewComment] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Giả sử chưa đăng nhập
+
+  const [films, setFilms] = useState();
   const navigate = useNavigate();
+  const { filmId } = useParams();
   const userCurrent = loadFromLocalstorage("user");
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getFilmData();
+      setFilms(response.data || []);
+    };
+    fetchData();
+  }, [callback]);
+  const filmDetail = films?.filter((film) => film.id === filmId)[0];
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
 
-  const handleSubmitComment = () => {
-    if (isLoggedIn && newComment.trim() !== "") {
-      setComments([...comments, newComment]);
-      setNewComment("");
+  const addCommentToFilm = (filmId, newComment) => {
+    const film = films?.find((film) => film.id === filmId);
+    if (!film) {
+      throw new Error("Film not found");
     }
+    return film.comments.push(newComment);
+  };
+
+  const handleSubmitComment = async () => {
+    const data = {
+      cmt: newComment,
+      user: userCurrent.email,
+    };
+    addCommentToFilm(filmId, data);
+    await postCommentFilm(
+      filmId,
+      films?.find((film) => film.id === filmId)
+    );
+    setNewComment("");
+    setCallback((prev) => !prev);
   };
   const [selectedEpisode, setSelectedEpisode] = useState(1);
 
@@ -53,9 +80,8 @@ export default function Watching() {
               <iframe
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" // Thay bằng link video của bạn
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
                 title="Video player"
-                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
@@ -137,12 +163,26 @@ export default function Watching() {
               </p>
             )}
 
-            {comments.length === 0 ? (
+            {filmDetail?.comments.length === 0 ? (
               <p>No Comment</p>
             ) : (
               <div>
-                {comments.map((comment, index) => (
-                  <p key={index}>{comment}</p>
+                {filmDetail?.comments.map((comment, index) => (
+                  <div
+                    style={{
+                      borderBottom: "1px solid lightgray",
+                      display: "flex",
+                      margin: "12px 0",
+                      padding: "12px 0",
+                      alignItems: "center",
+                    }}
+                    key={index}
+                  >
+                    <span style={{ marginRight: "12px" }}>
+                      <FaUserCircle />
+                    </span>
+                    <span>{comment.cmt}</span>
+                  </div>
                 ))}
               </div>
             )}
@@ -151,15 +191,13 @@ export default function Watching() {
       </div>
       <Row>
         <Container>
-          <Row>
+          {/* <Row>
             <Col md={6}>
-              <h2 style={{ marginLeft: "120px" }} className="text-white">
-                MOVIES OF THE SAME GENRE
-              </h2>
+              <h2 className="text-white">MOVIES OF THE SAME GENRE</h2>
             </Col>
             <Col md={6} className="custom-align"></Col>
-          </Row>
-          <Row style={{ justifyContent: "center" }}>
+          </Row> */}
+          {/* <Row style={{ justifyContent: "center" }}>
             <Col xs={6} md={2} lg={2}>
               <Card className="bg-dark text-white">
                 <Card.Img src="./Anh/anh3.png" />
@@ -392,25 +430,23 @@ export default function Watching() {
                 <p>Jun 8, 2024</p>
               </div>
             </Col>
-          </Row>
+          </Row> */}
         </Container>
       </Row>
 
       <Row>
         <Container>
-          <Row>
+          {/* <Row>
             <Col md={6}>
-              <h2 style={{ marginLeft: "120px" }} className="text-white">
-                MOVIE NOMINATION
-              </h2>
+              <h2 className="text-white">MOVIE NOMINATION</h2>
             </Col>
             <Col md={6} className="custom-align">
               <Button variant="primary" className="mt-4">
                 Xem tất cả
               </Button>
             </Col>
-          </Row>
-          <Row style={{ justifyContent: "center" }}>
+          </Row> */}
+          {/* <Row style={{ justifyContent: "center" }}>
             <Col xs={6} md={2} lg={2}>
               <Card className="bg-dark text-white">
                 <Card.Img src="./Anh/anh3.png" />
@@ -526,7 +562,7 @@ export default function Watching() {
                 <p>Jun 8, 2024</p>
               </div>
             </Col>
-          </Row>
+          </Row> */}
         </Container>
       </Row>
       <Footer />

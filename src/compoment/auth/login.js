@@ -2,7 +2,7 @@ import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import "./login.css";
 import { useEffect, useState } from "react";
 import { getUser } from "../../apis/user.request";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { saveLocalstorage } from "../../utils/LocalStorage";
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -101,7 +101,7 @@ export default function Login() {
                   <a href="/">Forgot password?</a>
                 </div>
                 <div className="signup-link">
-                  Don't have an account? <a href="/">Sign up here</a>
+                  Don't have an account? <Link to="/signup">Sign up here</Link>
                 </div>
               </Form>
             </div>

@@ -2,6 +2,7 @@ import React from "react";
 import MainRoutes from "./router/MainRoutes";
 import Details from "./compoment/detail/Detail";
 import Watching from "./compoment/watching/Watching";
+import Search from "./compoment/Search";
 
 const App = () => {
   return (
