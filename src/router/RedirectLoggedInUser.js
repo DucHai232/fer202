@@ -5,8 +5,8 @@ import { loadFromLocalstorage } from "../utils/LocalStorage";
 const RedirectLoggedInUser = () => {
   const navigate = useNavigate();
 
+  const user = loadFromLocalstorage("user");
   useEffect(() => {
-    const user = loadFromLocalstorage("user");
     if (user) {
       if (user.isAdmin) {
         navigate("/admin");
@@ -14,7 +14,7 @@ const RedirectLoggedInUser = () => {
         navigate("/");
       }
     }
-  }, []);
+  }, [user, navigate]);
 
   return null;
 };

@@ -9,6 +9,7 @@ import Watching from "../compoment/watching/Watching";
 import Search from "../compoment/Search";
 import { loadFromLocalstorage } from "../utils/LocalStorage";
 import RedirectLoggedInUser from "./RedirectLoggedInUser";
+import AddMovie from "../compoment/admin/addfilm";
 
 const MainRoutes = () => {
   return (
@@ -23,7 +24,10 @@ const MainRoutes = () => {
           <Route path=":filmId/xem-phim" element={<Watching />} />
         </Route>
         <Route path="/search" element={<Search />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin">
+          <Route path="" element={<Admin />} />
+          <Route path="them-phim" element={<AddMovie />} />
+        </Route>
       </Routes>
     </>
   );

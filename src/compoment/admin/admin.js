@@ -16,8 +16,9 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Admin.css"; // Custom CSS for styling
 import { removeLocalstorage } from "../../utils/LocalStorage";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteUser, getUser } from "../../apis/user.request";
+import HeaderAdmin from "./headerAdmin";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -30,10 +31,6 @@ export default function Admin() {
     };
     fetchDataUser();
   }, [callback]);
-  const handleLogout = () => {
-    removeLocalstorage("user");
-    navigate("/login");
-  };
 
   const handleDelete = async (userId) => {
     console.log(userId);
@@ -46,43 +43,8 @@ export default function Admin() {
   const handleUpdate = () => {};
   return (
     <Container fluid className="admin-container admin-container1">
-      <Row className="header-row header-row1  align-items-center">
-        <Col md={3} className="header-col text-center">
-          <h3 className="admin-title admin-title1">ADMIN</h3>
-        </Col>
-        <Col md={9} className="header-col header-col1">
-          <Navbar
-            bg="light"
-            variant="light"
-            className="justify-content-between align-items-center shadow-sm shadow-sm1 rounded"
-          >
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Tìm kiếm"
-                className="mr-sm-2"
-              />
-            </Form>
-            <div
-              className="d-flex align-items-center ml-auto"
-              style={{ marginLeft: "400px" }}
-            >
-              <Dropdown>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
-                  <Image
-                    src="https://placehold.co/50x50?text=A"
-                    className="profile-img profile-img1"
-                    roundedCircle
-                  />
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="dropdown-menu-right">
-                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </Navbar>
-        </Col>
-      </Row>
+      <HeaderAdmin />
+
       <Row>
         <Col md={3} className="sidebar-col sidebar-col1">
           <Navbar
@@ -103,7 +65,7 @@ export default function Admin() {
                     <NavDropdown.Item href="#action1">
                       Danh sách phim
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#action2">
+                    <NavDropdown.Item as={Link} to="/admin/them-phim">
                       Thêm phim
                     </NavDropdown.Item>
                     <NavDropdown.Item href="#action3">

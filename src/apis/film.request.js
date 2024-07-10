@@ -8,3 +8,7 @@ export const getFilmData = () => {
 export const postCommentFilm = (id, data) => {
   return API.put(`/film/${id}`, data);
 };
+
+export const uploadFilmToServer = (data) => {
+  return API.post("/film", data);
+};
