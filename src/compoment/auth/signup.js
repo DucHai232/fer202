@@ -1,8 +1,8 @@
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import "./login.css";
 import { useState } from "react";
-import { getUser, register } from "../../apis/user.request";
 import { useNavigate } from "react-router-dom";
+import { createUser, getUser } from "../../actions/user";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -17,17 +17,17 @@ export default function SignUp() {
     setFormData({ ...formData, [e.target.name]: value });
   };
 
-  const checkEmailExists = async (email) => {
-    const response = await getUser();
-    return response.data?.some((user) => user.email === email);
+  const checkEmailExists = (email) => {
+    const response = getUser();
+    return response?.some((user) => user.email === email);
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("Mật khẩu không khớp");
       return;
     }
-    const emailExists = await checkEmailExists(formData.email);
+    const emailExists = checkEmailExists(formData.email);
     if (emailExists) {
       alert("Email đã tồn tại");
       return;
@@ -37,15 +37,23 @@ export default function SignUp() {
         email: formData.email,
         password: formData.password,
         isAdmin: false,
+        status: true,
+        avatar: "",
+        phone: "",
+        name: "",
       };
-      await register(newUser);
-      alert("Đăng ký thành công");
-      navigate("/login");
-      setFormData({
-        password: "",
-        confirmPassword: "",
-        email: "",
-      });
+      const result = createUser(newUser);
+      if (result) {
+        alert(result.message);
+        navigate("/login");
+        setFormData({
+          password: "",
+          confirmPassword: "",
+          email: "",
+        });
+      } else {
+        alert(result.message);
+      }
     } catch (error) {
       console.error("Error during registration:", error);
     }

@@ -12,22 +12,18 @@ import {
 import "./Detail.css";
 import Header from "../header/Header";
 import { useEffect, useState } from "react";
-import { getFilmData } from "../../apis/film.request";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../footer/Footer";
 import { loadFromLocalstorage } from "../../utils/LocalStorage";
+import { getFilmById, getFilms } from "../../actions/film";
 export default function Details() {
   const [filmData, setFilmData] = useState([]);
   const { filmId } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getFilmData();
-      setFilmData(response.data || []);
-    };
-    fetchData();
+    setFilmData(getFilms());
   }, []);
-  const filmDetail = filmData.filter((el) => el.id === filmId)[0];
+  const filmDetail = getFilmById(filmId);
   const handleWatch = () => {
     const user = loadFromLocalstorage("user");
     if (!user) {

@@ -18,22 +18,22 @@ import "./Admin.css";
 import { Link, useNavigate } from "react-router-dom";
 import HeaderAdmin from "./headerAdmin";
 import Menu from "./Menu";
-import { deleteUser, getUser } from "../../actions/user";
+import { deleteFilm, getFilms } from "../../actions/film";
 
-export default function Admin() {
+export default function ListFilm() {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]);
+  const [films, setFilms] = useState([]);
   useEffect(() => {
-    setUsers(getUser());
+    setFilms(getFilms());
   }, []);
 
-  const handleDelete = (userId) => {
-    const confirm = window.confirm("Bạn có muốn xóa không");
+  const handleDelete = (filmId) => {
+    const confirm = window.confirm("Bạn có muốn xóa phim này không");
     if (confirm) {
-      const result = deleteUser(userId);
+      const result = deleteFilm(filmId);
       if (result) {
         alert(result.message);
-        setUsers(getUser());
+        setFilms(getFilms());
       } else {
         alert(result.message);
       }
@@ -60,8 +60,9 @@ export default function Admin() {
             <Button
               style={{ width: "150px" }}
               className="shadow-sm shadow-sm1 create-button create-button1"
+              onClick={() => navigate("/admin/add-film")}
             >
-              Tạo user
+              Tạo film
             </Button>
           </div>
 
@@ -73,32 +74,43 @@ export default function Admin() {
           >
             <thead>
               <tr>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Số điện thoại</th>
-                <th>Quyền</th>
+                <th>Têm film</th>
+                <th>Chủ đề</th>
+                <th>Thể loại</th>
+                <th>Ngày công chiếu</th>
+                <th>Thời gian</th>
+                <th>Tác giả</th>
                 <th>Trạng thái</th>
-                <th>Delete</th>
-                <th>Update</th>
+                <th>Sửa</th>
+                <th>Xóa</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {films.map((film, index) => (
                 <tr key={index} className="table-row table-row1">
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.phone}</td>
-                  <td>{user.isAdmin ? "ADMIN" : "USER"}</td>
-                  <td className={user.status ? "text-success" : "text-warning"}>
-                    {user.status ? "Kích hoạt" : "Không hoạt động"}
+                  <td>{film.nameFilm}</td>
+                  <td>{film.topic}</td>
+                  <td>{film.type}</td>
+                  <td>{film.releaseDate}</td>
+                  <td>{film.runTime} phút</td>
+                  <td>{film.writer}</td>
+                  <td
+                    className={
+                      film.status === "Released"
+                        ? "text-success"
+                        : "text-warning"
+                    }
+                  >
+                    {film.status}
                   </td>
-                  <td onClick={() => handleDelete(user.id)}>
+
+                  <td onClick={() => handleDelete(film.id)}>
                     <Button>Xóa</Button>
                   </td>
-                  <td onClick={() => handleUpdate(user.id)}>
+                  <td onClick={() => handleUpdate(film.id)}>
                     <Button
                       variant="warning"
-                      onClick={() => navigate(`/admin/update-user/${user.id}`)}
+                      onClick={() => navigate(`/admin/update-film/${film.id}`)}
                     >
                       Sửa
                     </Button>

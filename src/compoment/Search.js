@@ -17,20 +17,16 @@ import {
 import "./Search.css";
 import Header from "./header/Header";
 import { useEffect, useState } from "react";
-import { getFilmData } from "../apis/film.request";
 import { useQuery } from "../utils/UseQuery";
 import Footer from "./footer/Footer";
+import { getFilms } from "../actions/film";
 export default function Search() {
   const [films, setFilms] = useState([]);
   const [results, setResults] = useState([]);
   const query = useQuery();
   const searchQuery = query.get("q");
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getFilmData();
-      setFilms(response.data || []);
-    };
-    fetchData();
+    setFilms(getFilms());
   }, []);
 
   useEffect(() => {

@@ -12,19 +12,15 @@ import {
 } from "react-bootstrap";
 import "./Home.css";
 import { useEffect, useState } from "react";
-import { getFilmData } from "../../apis/film.request";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
+import { getFilmReleased, getFilms } from "../../actions/film";
 
 export default function Home() {
   const [dataFilm, setDataFilm] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getFilmData();
-      setDataFilm(response.data);
-    };
-    fetchData();
+    setDataFilm(getFilmReleased());
   }, []);
   return (
     <div className="App">

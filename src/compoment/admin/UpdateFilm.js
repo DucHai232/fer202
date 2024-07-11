@@ -1,26 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Col,
   Container,
   Row,
   Navbar,
-  Nav,
   FormControl,
   Button,
   Image,
-  NavDropdown,
   Table,
   Form,
   Card,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Admin.css"; // Custom CSS for styling
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import HeaderAdmin from "./headerAdmin";
 import Menu from "./Menu";
-import { createFilm } from "../../actions/film";
+import { getFilms, updateFilm } from "../../actions/film";
 
-export default function AddMovie() {
+export default function UpdateFilm() {
+  const { id } = useParams(); // Lấy ID phim từ params
   const navigate = useNavigate();
   const [movie, setMovie] = useState({
     poster: "",
@@ -34,6 +32,26 @@ export default function AddMovie() {
     linkVideo: "",
     runTime: "",
   });
+
+  useEffect(() => {
+    const films = getFilms();
+    const filmToEdit = films.find((film) => film.id === id);
+    if (filmToEdit) {
+      setMovie({
+        poster: filmToEdit.image,
+        title: filmToEdit.nameFilm,
+        topic: filmToEdit.topic,
+        director: filmToEdit.writer,
+        genre: filmToEdit.type,
+        status: filmToEdit.status,
+        releaseDate: filmToEdit.releaseDate,
+        description: filmToEdit.description,
+        linkVideo: filmToEdit.linkVideo,
+        runTime: filmToEdit.runTime,
+      });
+    }
+  }, [id]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setMovie({ ...movie, [name]: value });
@@ -41,7 +59,8 @@ export default function AddMovie() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newFilm = {
+    const updatedFilm = {
+      id,
       image: movie.poster,
       nameFilm: movie.title,
       evaluate: 10,
@@ -51,50 +70,38 @@ export default function AddMovie() {
       description: movie.description,
       runTime: movie.runTime,
       writer: movie.director,
-      actor: [],
-      comments: [],
+      actor: [], // Assuming actors are not updated here
+      comments: [], // Assuming comments are not updated here
       status: movie.status,
       linkVideo: movie.linkVideo,
     };
-    const result = createFilm(newFilm);
+    const result = updateFilm(id, updatedFilm);
     if (result) {
       alert(result.message);
       navigate("/admin/list-film");
-      setMovie({
-        poster: "",
-        title: "",
-        topic: "",
-        director: "",
-        genre: "",
-        status: "Unreleased",
-        releaseDate: "",
-        description: "",
-        linkVideo: "",
-        runTime: "",
-      });
     } else {
       alert(result.message);
     }
   };
 
   return (
-    <Container fluid className="admin-container admin-container1">
+    <Container fluid className="admin-container">
       <HeaderAdmin />
       <Row>
-        <Col md={3} className="sidebar-col sidebar-col1">
+        <Col md={3} className="sidebar-col">
           <Navbar
             bg="dark"
             variant="dark"
             expand="lg"
-            className="flex-column sidebar sidebar1"
+            className="flex-column sidebar"
           >
             <Menu />
           </Navbar>
         </Col>
-        <Col md={9} className="content-col content-col1">
-          <Card className="shadow-sm shadow-sm1 rounded">
+        <Col md={9} className="content-col">
+          <Card className="shadow-sm rounded">
             <Card.Header as="h2" className="text-center">
-              Add New Movie
+              Edit Movie
             </Card.Header>
             <Card.Body>
               <Form onSubmit={handleSubmit}>
@@ -121,12 +128,7 @@ export default function AddMovie() {
                     </Form.Group>
                   </Col>
                   <Col md={8}>
-                    <Table
-                      striped
-                      bordered
-                      hover
-                      className="shadow-sm shadow-sm1 rounded"
-                    >
+                    <Table striped bordered hover className="shadow-sm rounded">
                       <tbody>
                         <tr>
                           <th>Title</th>
@@ -241,7 +243,7 @@ export default function AddMovie() {
                     </Table>
                     <div className="d-flex justify-content-end">
                       <Button variant="primary" type="submit">
-                        Add Movie
+                        Update Movie
                       </Button>
                     </div>
                   </Col>

@@ -1,0 +1,267 @@
+[
+    {
+      "id": "film-1",
+      "image": "/Anh/anh1.png",
+      "nameFilm": "The Adventure Begins",
+      "evaluate": 8.5,
+      "releaseDate": "2022-03-15",
+      "topic": "Adventure",
+      "type": "Movie",
+      "description": "A thrilling journey that marks the start of an epic saga.",
+      "runTime": 120,
+      "writer": "John Doe",
+      "actor": [
+        {
+          "name": "Chris Evans",
+          "role": "Hero",
+          "avatar": "/Anh/anh11.png"
+        },
+        {
+          "name": "Scarlett Johansson",
+          "role": "Sidekick",
+          "avatar": "/Anh/anh11.png"
+        }
+      ],
+      "comments": [
+        {
+          "user": "user1",
+          "cmt": "Amazing movie! Highly recommended."
+        },
+        {
+          "user": "user2",
+          "cmt": "Great adventure and storytelling."
+        }
+      ],
+      "status": "Released",
+      "linkVideo": "https://example.com/film-1"
+    },
+    {
+      "id": "film-2",
+      "image": "/Anh/anh2.png",
+      "nameFilm": "Mystery of the Night",
+      "evaluate": 7.8,
+      "releaseDate": "2021-10-31",
+      "topic": "Mystery",
+      "type": "Movie",
+      "description": "A spine-chilling tale that unravels the secrets of the night.",
+      "runTime": 110,
+      "writer": "Jane Smith",
+      "actor": [
+        {
+          "name": "Tom Hiddleston",
+          "role": "Detective",
+          "avatar": "/Anh/anh11.png"
+        },
+        {
+          "name": "Emily Blunt",
+          "role": "Victim",
+          "avatar": "/Anh/anh11.png"
+        }
+      ],
+      "comments": [
+        {
+          "user": "user3",
+          "cmt": "Suspenseful and thrilling!"
+        },
+        {
+          "user": "user4",
+          "cmt": "Kept me on the edge of my seat."
+        }
+      ],
+      "status": "Released",
+      "linkVideo": "https://example.com/film-2"
+    },
+    {
+      "id": "film-3",
+      "image": "/Anh/anh3.png",
+      "nameFilm": "Love in the Air",
+      "evaluate": 9,
+      "releaseDate": "2020-02-14",
+      "topic": "Romance",
+      "type": "TV Show",
+      "description": "A heartwarming story of love and connection.",
+      "runTime": 45,
+      "writer": "Emily Johnson",
+      "actor": [
+        {
+          "name": "Ryan Gosling",
+          "role": "Lover",
+          "avatar": "/Anh/anh11.png"
+        },
+        {
+          "name": "Emma Stone",
+          "role": "Beloved",
+          "avatar": "/Anh/anh11.png"
+        }
+      ],
+      "comments": [
+        {
+          "user": "user5",
+          "cmt": "Beautiful love story."
+        },
+        {
+          "user": "user6",
+          "cmt": "Tugged at my heartstrings."
+        },
+        {
+          "user": "User4@gmail.com",
+          "cmt": "ass"
+        },
+        {
+          "user": "User4@gmail.com",
+          "cmt": "Phim hay\n"
+        },
+        {
+          "user": "User4@gmail.com",
+          "cmt": "Test cmt\n"
+        },
+        {
+          "user": "user1@gmail.com",
+          "cmt": ""
+        },
+        {
+          "user": "user1@gmail.com",
+          "cmt": "hhhh"
+        }
+      ],
+      "status": "Unreleased",
+      "linkVideo": "https://example.com/film-3"
+    },
+    {
+      "id": "film-4",
+      "image": "/Anh/anh4.png",
+      "nameFilm": "Galactic Battles",
+      "evaluate": 8.2,
+      "releaseDate": "2019-07-20",
+      "topic": "Sci-Fi",
+      "type": "Movie",
+      "description": "A futuristic war between galaxies.",
+      "runTime": 130,
+      "writer": "Michael Brown",
+      "actor": [
+        {
+          "name": "Mark Hamill",
+          "role": "Commander",
+          "avatar": "/Anh/anh11.png"
+        },
+        {
+          "name": "Carrie Fisher",
+          "role": "General",
+          "avatar": "/Anh/anh11.png"
+        }
+      ],
+      "comments": [
+        {
+          "user": "user7",
+          "cmt": "Epic sci-fi action!"
+        },
+        {
+          "user": "user8",
+          "cmt": "A must-watch for sci-fi fans."
+        }
+      ],
+      "status": "Released",
+      "linkVideo": "https://example.com/film-4"
+    },
+    {
+      "id": "film-5",
+      "image": "/Anh/anh5.png",
+      "nameFilm": "Journey to the East",
+      "evaluate": 7.5,
+      "releaseDate": "2018-09-12",
+      "topic": "Drama",
+      "type": "TV Show",
+      "description": "An emotional journey through the East.",
+      "runTime": 50,
+      "writer": "Sarah Wilson",
+      "actor": [
+        {
+          "name": "Jet Li",
+          "role": "Traveler",
+          "avatar": "/Anh/anh11.png"
+        },
+        {
+          "name": "Zhang Ziyi",
+          "role": "Guide",
+          "avatar": "/Anh/anh11.png"
+        }
+      ],
+      "comments": [
+        {
+          "user": "user9",
+          "cmt": "Emotionally powerful."
+        },
+        {
+          "user": "user10",
+          "cmt": "A touching story."
+        }
+      ],
+      "status": "Released",
+      "linkVideo": "https://example.com/film-5"
+    },
+    {
+      "id": "film-6",
+      "image": "/Anh/anh6.png",
+      "nameFilm": "Heroes of the Realm",
+      "evaluate": 8.7,
+      "releaseDate": "2023-05-10",
+      "topic": "Fantasy",
+      "type": "Movie",
+      "description": "A fantastical adventure with legendary heroes.",
+      "runTime": 140,
+      "writer": "David Green",
+      "actor": [
+        {
+          "name": "Orlando Bloom",
+          "role": "Archer",
+          "avatar": "/Anh/anh11.png"
+        },
+        {
+          "name": "Cate Blanchett",
+          "role": "Sorceress",
+          "avatar": "/Anh/anh11.png"
+        }
+      ],
+      "comments": [
+        {
+          "user": "user11",
+          "cmt": "Magical and exciting."
+        },
+        {
+          "user": "user12",
+          "cmt": "Loved the fantasy elements."
+        },
+        {
+          "cmt": "",
+          "user": "user1@gmail.com"
+        },
+        {
+          "cmt": "Alo",
+          "user": "user1@gmail.com"
+        }
+      ],
+      "status": "Released",
+      "linkVideo": "https://example.com/film-6"
+    },
+    {
+      "image": "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lnvof9t60hh6b4_tn.webp",
+      "nameFilm": "Film Hay",
+      "evaluate": 10,
+      "releaseDate": "2024-07-10",
+      "topic": "Phiêu lưu",
+      "type": "Hành động",
+      "description": "mô tả",
+      "runTime": "120",
+      "writer": "ABC",
+      "actor": [],
+      "comments": [
+        {
+          "cmt": "Comment",
+          "user": "user1@gmail.com"
+        }
+      ],
+      "status": "Released",
+      "linkVideo": "https://www.youtube.com/watch?v=DKoFH6NPkSM",
+      "id": "1"
+    }
+  ]

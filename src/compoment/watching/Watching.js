@@ -19,8 +19,8 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadFromLocalstorage } from "../../utils/LocalStorage";
-import { getFilmData, postCommentFilm } from "../../apis/film.request";
 import { FaUserCircle } from "react-icons/fa";
+import { commentFilm, getFilmById, getFilms } from "../../actions/film";
 export default function Watching() {
   const [callback, setCallback] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -30,13 +30,9 @@ export default function Watching() {
   const { filmId } = useParams();
   const userCurrent = loadFromLocalstorage("user");
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getFilmData();
-      setFilms(response.data || []);
-    };
-    fetchData();
+    setFilms(getFilms());
   }, [callback]);
-  const filmDetail = films?.filter((film) => film.id === filmId)[0];
+  const filmDetail = getFilmById(filmId);
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
@@ -54,13 +50,13 @@ export default function Watching() {
       cmt: newComment,
       user: userCurrent.email,
     };
-    addCommentToFilm(filmId, data);
-    await postCommentFilm(
-      filmId,
-      films?.find((film) => film.id === filmId)
-    );
-    setNewComment("");
-    setCallback((prev) => !prev);
+    const result = commentFilm(filmId, data);
+    if (result.success) {
+      setNewComment("");
+      setFilms(getFilms());
+    } else {
+      alert(result.message);
+    }
   };
   const [selectedEpisode, setSelectedEpisode] = useState(1);
 
@@ -80,7 +76,11 @@ export default function Watching() {
               <iframe
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                src={
+                  filmDetail.linkVideo
+                    ? filmDetail.linkVideo
+                    : "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                }
                 title="Video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

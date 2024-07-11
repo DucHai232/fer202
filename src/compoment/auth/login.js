@@ -1,9 +1,10 @@
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import "./login.css";
 import { useEffect, useState } from "react";
-import { getUser } from "../../apis/user.request";
 import { Link, useNavigate } from "react-router-dom";
 import { saveLocalstorage } from "../../utils/LocalStorage";
+import { getUser } from "../../actions/user";
+
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -12,12 +13,8 @@ export default function Login() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    const fetchUser = async () => {
-      const response = await getUser();
-      setUsers(response.data || []);
-    };
-    fetchUser();
-  }, []);
+    setUsers(getUser());
+  });
   const handleChange = (e) => {
     const value = e.target.value;
     setFormData({ ...formData, [e.target.name]: value });

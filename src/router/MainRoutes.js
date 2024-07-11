@@ -10,6 +10,9 @@ import Search from "../compoment/Search";
 import { loadFromLocalstorage } from "../utils/LocalStorage";
 import RedirectLoggedInUser from "./RedirectLoggedInUser";
 import AddMovie from "../compoment/admin/addfilm";
+import DetailUser from "../compoment/admin/detailsadmin";
+import ListFilm from "../compoment/admin/ListFilm";
+import UpdateFilm from "../compoment/admin/UpdateFilm";
 
 const MainRoutes = () => {
   return (
@@ -26,7 +29,10 @@ const MainRoutes = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/admin">
           <Route path="" element={<Admin />} />
-          <Route path="them-phim" element={<AddMovie />} />
+          <Route path="add-film" element={<AddMovie />} />
+          <Route path="list-film" element={<ListFilm />} />
+          <Route path="update-user/:userId" element={<DetailUser />} />
+          <Route path="update-film/:id" element={<UpdateFilm />} />
         </Route>
       </Routes>
     </>

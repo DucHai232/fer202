@@ -4,6 +4,7 @@ import Details from "./compoment/detail/Detail";
 import Watching from "./compoment/watching/Watching";
 import Search from "./compoment/Search";
 import AddMovie from "./compoment/admin/addfilm";
+import DetailUser from "./compoment/admin/detailsadmin";
 
 const App = () => {
   return (
@@ -19,7 +20,6 @@ const App = () => {
       <AddMovie />
       <UpdateUser /> */}
       {/* <Details /> */}
-
       <MainRoutes />
     </div>
   );
