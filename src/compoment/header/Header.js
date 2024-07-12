@@ -3,30 +3,25 @@ import {
   Nav,
   Container,
   Navbar,
-  Form,
-  FormControl,
-  Button,
   NavDropdown,
+  Button,
+  Image,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { loadFromLocalstorage } from "../../utils/LocalStorage";
-import typeFilm from "../../dataSource/typeFilm.json";
-import originFilm from "../../dataSource/originFilm.json";
+import typeFilm from "../../dataSource/genres.json";
+import originFilm from "../../dataSource/origins.json";
+
 const Header = () => {
   const user = loadFromLocalstorage("user");
-  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
-  };
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -45,36 +40,33 @@ const Header = () => {
               </Nav.Link>
               <NavDropdown title="Thể loại" id="basic-nav-dropdown">
                 {typeFilm.map((type) => (
-                  <NavDropdown.Item as={Link} to={type.url}>
-                    {type.text}
+                  <NavDropdown.Item as={Link} to={`/genre/${type.value}`}>
+                    {type.label}
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>
               <NavDropdown title="Quốc Gia" id="basic-nav-dropdown">
                 {originFilm.map((origin) => (
-                  <NavDropdown.Item as={Link} to={origin.url}>
-                    {origin.text}
+                  <NavDropdown.Item as={Link} to={`/origin/${origin.value}`}>
+                    {origin.label}
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>
             </Nav>
-            <Form className="d-flex me-auto" onSubmit={handleSearch}>
-              <FormControl
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Button type="submit" style={{ backgroundColor: "red" }}>
-                Search
-              </Button>
-            </Form>
             <Nav>
               {user ? (
                 <NavDropdown
-                  title={<FaUserCircle size={30} style={{ color: "white" }} />}
+                  title={
+                    user.avatar ? (
+                      <Image
+                        src={user.avatar}
+                        roundedCircle
+                        style={{ width: 30, height: 30 }}
+                      />
+                    ) : (
+                      <FaUserCircle size={30} style={{ color: "white" }} />
+                    )
+                  }
                   id="user-nav-dropdown"
                   align="end"
                 >

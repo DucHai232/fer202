@@ -16,6 +16,17 @@ export const getUserById = (userId) => {
   return user;
 };
 
+export const banedUser = (userId) => {
+  const storedUsers = loadFromLocalstorage("users") || dataUser;
+  const user = storedUsers.find((user) => user.id === userId);
+  if (user && user.status == false) {
+    alert("Tài khoản này đã bị vô hiệu hóa");
+    return true;
+  }
+
+  return false;
+};
+
 export const createUser = (newUser) => {
   try {
     const newUserId = `user-id-${dataUser.length + 1}`;
@@ -59,5 +70,23 @@ export const updateUser = (userId, data) => {
   } catch (error) {
     console.error("Lỗi khi sửa người dùng:", error);
     return { success: false, message: "Đã xảy ra lỗi khi sửa người dùng." };
+  }
+};
+
+export const changePassword = (passwordOld, passwordNew) => {
+  try {
+    let users = loadFromLocalstorage("users") || [];
+    const userToUpdate = users.find((user) => user.password === passwordOld);
+
+    if (!userToUpdate) {
+      return { success: false, message: "Mật khẩu cũ không đúng" };
+    }
+    userToUpdate.password = passwordNew;
+    saveLocalstorage("users", users);
+
+    return { success: true, message: "Đổi mật khẩu thành công" };
+  } catch (error) {
+    console.error("Lỗi khi sửa mật khẩu", error);
+    return { success: false, message: "Đã xảy ra lỗi khi sửa mật khẩu" };
   }
 };

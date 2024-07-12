@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from "react";
-import {
-  Col,
-  Container,
-  Row,
-  Navbar,
-  Nav,
-  FormControl,
-  Button,
-  Image,
-  NavDropdown,
-  Table,
-  Form,
-  Dropdown,
-} from "react-bootstrap";
+import { Col, Container, Row, Navbar, Button, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Admin.css";
 import { Link, useNavigate } from "react-router-dom";
 import HeaderAdmin from "./headerAdmin";
 import Menu from "./Menu";
-import { deleteFilm, getFilms } from "../../actions/film";
+import { deleteActor, getActors } from "../../actions/actor";
+import { getFilms, updateActorOfFilm } from "../../actions/film";
 
-export default function ListFilm() {
+export default function ListActor() {
   const navigate = useNavigate();
+  const [actors, setActors] = useState([]);
   const [films, setFilms] = useState([]);
   useEffect(() => {
+    setActors(getActors());
     setFilms(getFilms());
   }, []);
 
-  const handleDelete = (filmId) => {
-    const confirm = window.confirm("Bạn có muốn xóa phim này không");
+  const handleDelete = (actorId, filmId) => {
+    const confirm = window.confirm("Bạn có muốn xóa không");
+
     if (confirm) {
-      const result = deleteFilm(filmId);
+      const result = deleteActor(actorId);
       if (result) {
+        const filmOfActor = films.find((el) => el.id === filmId);
+        const deleteActorInFilm = filmOfActor.actor.filter(
+          (el) => el.id !== actorId
+        );
+        updateActorOfFilm(filmId, deleteActorInFilm);
+
         alert(result.message);
-        setFilms(getFilms());
+        setActors(getActors());
       } else {
         alert(result.message);
       }
@@ -60,9 +57,9 @@ export default function ListFilm() {
             <Button
               style={{ width: "150px" }}
               className="shadow-sm shadow-sm1 create-button create-button1"
-              onClick={() => navigate("/admin/add-film")}
+              onClick={() => navigate("/admin/create-actor")}
             >
-              Tạo film
+              Tạo Diễn Viên
             </Button>
           </div>
 
@@ -74,43 +71,38 @@ export default function ListFilm() {
           >
             <thead>
               <tr>
-                <th>Têm film</th>
-                <th>Chủ đề</th>
-                <th>Thể loại</th>
-                <th>Ngày công chiếu</th>
-                <th>Thời gian</th>
-                <th>Tác giả</th>
-                <th>Trạng thái</th>
-                <th>Sửa</th>
-                <th>Xóa</th>
+                <th>Tên diễn viên</th>
+                <th>Avatar</th>
+                <th>Vai trò</th>
+                <th>Delete</th>
+                <th>Update</th>
               </tr>
             </thead>
             <tbody>
-              {films.map((film, index) => (
+              {actors.map((actor, index) => (
                 <tr key={index} className="table-row table-row1">
-                  <td>{film.nameFilm}</td>
-                  <td>{film.genre}</td>
-                  <td>{film.type === "phim-le" ? "Phim lẻ" : "Phim bộ"}</td>
-                  <td>{film.releaseDate}</td>
-                  <td>{film.runTime} phút</td>
-                  <td>{film.writer}</td>
-                  <td
-                    className={
-                      film.status === "Released"
-                        ? "text-success"
-                        : "text-warning"
-                    }
-                  >
-                    {film.status}
+                  <td>{actor.name}</td>
+                  <td>
+                    <img
+                      src={actor.avatar}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        borderRadius: "50%",
+                      }}
+                    />
                   </td>
+                  <td>{actor.role}</td>
 
-                  <td onClick={() => handleDelete(film.id)}>
+                  <td onClick={() => handleDelete(actor.id, actor.film)}>
                     <Button>Xóa</Button>
                   </td>
-                  <td onClick={() => handleUpdate(film.id)}>
+                  <td onClick={() => handleUpdate(actor.id)}>
                     <Button
                       variant="warning"
-                      onClick={() => navigate(`/admin/update-film/${film.id}`)}
+                      onClick={() =>
+                        navigate(`/admin/update-actor/${actor.id}`)
+                      }
                     >
                       Sửa
                     </Button>

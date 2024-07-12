@@ -1,0 +1,20 @@
+[
+    { "label": "Hành động", "value": "action" },
+    { "label": "Hài hước", "value": "comedy" },
+    { "label": "Viễn tưởng", "value": "sci-fi" },
+    { "label": "Kinh dị", "value": "horror" },
+    { "label": "Lãng mạn", "value": "romance" },
+    { "label": "Phiêu lưu", "value": "adventure" },
+    { "label": "Hình sự", "value": "crime" },
+    { "label": "Gia đình", "value": "family" },
+    { "label": "Lịch sử", "value": "history" },
+    { "label": "Bí ẩn", "value": "mystery" },
+    { "label": "Hoạt hình", "value": "animation" },
+    { "label": "Khoa học", "value": "science" },
+    { "label": "Chiến tranh", "value": "war" },
+    { "label": "Phim truyền hình", "value": "tv-show" },
+    { "label": "Kinh điển", "value": "classic" },
+    { "label": "Thần thoại", "value": "mythology" },
+    { "label": "Kịch tính", "value": "drama" }
+  ]
+  

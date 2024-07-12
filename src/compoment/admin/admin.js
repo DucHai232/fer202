@@ -60,8 +60,9 @@ export default function Admin() {
             <Button
               style={{ width: "150px" }}
               className="shadow-sm shadow-sm1 create-button create-button1"
+              onClick={() => navigate("/admin/create-admin")}
             >
-              Tạo user
+              Tạo Admin
             </Button>
           </div>
 

@@ -37,14 +37,6 @@ export default function Watching() {
     setNewComment(event.target.value);
   };
 
-  const addCommentToFilm = (filmId, newComment) => {
-    const film = films?.find((film) => film.id === filmId);
-    if (!film) {
-      throw new Error("Film not found");
-    }
-    return film.comments.push(newComment);
-  };
-
   const handleSubmitComment = async () => {
     const data = {
       cmt: newComment,

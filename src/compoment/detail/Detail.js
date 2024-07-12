@@ -60,10 +60,10 @@ export default function Details() {
               <p>He's not a killer, but he can pretend.</p>
               <div className="mb-2">
                 <Badge bg="danger" className="me-2">
-                  {filmDetail?.topic}
+                  {filmDetail?.genre}
                 </Badge>
                 <Badge bg="info" className="me-2">
-                  {filmDetail?.type}
+                  {filmDetail?.type === "phim-le" ? "Phim lẻ" : "Phim bộ"}
                 </Badge>
                 <Badge bg="success" className="me-2">
                   Crime
@@ -92,6 +92,13 @@ export default function Details() {
               </p>
               <p>
                 <strong>Runtime:</strong> {filmDetail?.runTime} minutes
+              </p>
+              <p>
+                <strong>Origin:</strong> {filmDetail?.origin}
+              </p>
+              <p>
+                <strong>Language:</strong>{" "}
+                {filmDetail?.language === "phu-de" ? "Phụ đề" : "Thuyết minh"}
               </p>
               <p>
                 <strong>Writer:</strong> {filmDetail?.writer}

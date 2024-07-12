@@ -1,0 +1,16 @@
+[
+    {
+        "id": "actor-id- 1",
+        "name": "Mark Hamill",
+        "role": "Commander",
+        "avatar": "/Anh/anh11.png",
+        "film": "film-3"
+    },
+    {
+        "id": "actor-id- 2",
+        "name": "Carrie Fisher",
+        "role": "General",
+        "avatar": "/Anh/anh11.png",
+        "film": "film-4"
+      }
+]

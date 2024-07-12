@@ -30,6 +30,15 @@ const Menu = () => {
                 Danh sách user
               </NavDropdown.Item>
             </NavDropdown>
+            <NavDropdown
+              title="Quản lý diễn viên"
+              id="nav-dropdown-p2"
+              style={{ fontSize: "25px" }}
+            >
+              <NavDropdown.Item as={Link} to={"/admin/list-actor"}>
+                Danh sách diễn viên
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

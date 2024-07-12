@@ -3,7 +3,7 @@ import "./login.css";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { saveLocalstorage } from "../../utils/LocalStorage";
-import { getUser } from "../../actions/user";
+import { banedUser, getUser } from "../../actions/user";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ export default function Login() {
   const navigate = useNavigate();
   useEffect(() => {
     setUsers(getUser());
-  });
+  }, []);
   const handleChange = (e) => {
     const value = e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
@@ -24,11 +24,17 @@ export default function Login() {
       const user = users.find((user) => user.email === formData.email);
       if (user) {
         if (user.password === formData.password) {
-          saveLocalstorage("user", user);
-          if (user.isAdmin) {
-            navigate("/admin");
-          } else {
-            navigate("/");
+          const banned = banedUser(user.id);
+          if (banned) {
+            return;
+          }
+          {
+            saveLocalstorage("user", user);
+            if (user.isAdmin) {
+              navigate("/admin");
+            } else {
+              navigate("/");
+            }
           }
         } else {
           alert("Email hoặc password không đúng");

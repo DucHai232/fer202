@@ -67,6 +67,26 @@ export const updateFilm = (filmId, data) => {
   }
 };
 
+export const updateActorOfFilm = (filmId, actor) => {
+  try {
+    const films = loadFromLocalstorage("films") || [];
+    const updatedFilms = films.map((film) => {
+      if (film.id === filmId) {
+        return { ...film, actor: actor };
+      }
+      return film;
+    });
+    saveLocalstorage("films", updatedFilms);
+    return {
+      success: true,
+      message: "Cập nhật phim thành công.",
+    };
+  } catch (error) {
+    console.error("Lỗi khi cập nhật", error);
+    return { success: false, message: "Đã xảy ra lỗi khi cập nhật" };
+  }
+};
+
 export const commentFilm = (filmId, comment) => {
   try {
     const films = getFilms();
@@ -81,4 +101,16 @@ export const commentFilm = (filmId, comment) => {
     console.error("Lỗi khi thêm bình luận:", error);
     return { success: false, message: "Đã xảy ra lỗi khi thêm bình luận." };
   }
+};
+
+export const filterFilmGenre = (genre) => {
+  const films = getFilms();
+  const genres = films.filter((el) => el.genre === genre);
+  return genres;
+};
+
+export const filterFilmOrigin = (origin) => {
+  const films = getFilms();
+  const origins = films.filter((el) => el.origin === origin);
+  return origins;
 };

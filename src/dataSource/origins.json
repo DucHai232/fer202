@@ -1,0 +1,23 @@
+[
+    { "label": "Việt Nam", "value": "vietnam" },
+    { "label": "Hoa Kỳ", "value": "usa" },
+    { "label": "Anh", "value": "uk" },
+    { "label": "Pháp", "value": "france" },
+    { "label": "Đức", "value": "germany" },
+    { "label": "Nhật Bản", "value": "japan" },
+    { "label": "Hàn Quốc", "value": "south-korea" },
+    { "label": "Trung Quốc", "value": "china" },
+    { "label": "Ấn Độ", "value": "india" },
+    { "label": "Canada", "value": "canada" },
+    { "label": "Úc", "value": "australia" },
+    { "label": "Brazil", "value": "brazil" },
+    { "label": "Nga", "value": "russia" },
+    { "label": "Ý", "value": "italy" },
+    { "label": "Tây Ban Nha", "value": "spain" },
+    { "label": "Mexico", "value": "mexico" },
+    { "label": "Thái Lan", "value": "thailand" },
+    { "label": "Malaysia", "value": "malaysia" },
+    { "label": "Singapore", "value": "singapore" },
+    { "label": "Indonesia", "value": "indonesia" }
+  ]
+  

@@ -4,26 +4,27 @@ import {
   Container,
   Row,
   Navbar,
-  FormControl,
+  Form,
   Button,
   Image,
   Table,
-  Form,
   Card,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import HeaderAdmin from "./headerAdmin";
 import Menu from "./Menu";
 import { getFilms, updateFilm } from "../../actions/film";
+import genres from "../../dataSource/genres.json";
+import origins from "../../dataSource/origins.json";
 
 export default function UpdateFilm() {
-  const { id } = useParams(); // Lấy ID phim từ params
+  const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState({
     poster: "",
     title: "",
-    topic: "",
+    type: "",
     director: "",
     genre: "",
     status: "Unreleased",
@@ -31,25 +32,32 @@ export default function UpdateFilm() {
     description: "",
     linkVideo: "",
     runTime: "",
+    language: "",
+    origin: "",
   });
 
   useEffect(() => {
-    const films = getFilms();
-    const filmToEdit = films.find((film) => film.id === id);
-    if (filmToEdit) {
-      setMovie({
-        poster: filmToEdit.image,
-        title: filmToEdit.nameFilm,
-        topic: filmToEdit.topic,
-        director: filmToEdit.writer,
-        genre: filmToEdit.type,
-        status: filmToEdit.status,
-        releaseDate: filmToEdit.releaseDate,
-        description: filmToEdit.description,
-        linkVideo: filmToEdit.linkVideo,
-        runTime: filmToEdit.runTime,
-      });
-    }
+    const fetchFilm = async () => {
+      const films = await getFilms();
+      const filmToEdit = films.find((film) => film.id === id);
+      if (filmToEdit) {
+        setMovie({
+          poster: filmToEdit.image,
+          title: filmToEdit.nameFilm,
+          type: filmToEdit.type,
+          director: filmToEdit.writer,
+          genre: filmToEdit.genre,
+          status: filmToEdit.status,
+          releaseDate: filmToEdit.releaseDate,
+          description: filmToEdit.description,
+          linkVideo: filmToEdit.linkVideo,
+          runTime: filmToEdit.runTime,
+          language: filmToEdit.language,
+          origin: filmToEdit.origin,
+        });
+      }
+    };
+    fetchFilm();
   }, [id]);
 
   const handleChange = (e) => {
@@ -65,22 +73,24 @@ export default function UpdateFilm() {
       nameFilm: movie.title,
       evaluate: 10,
       releaseDate: movie.releaseDate,
-      topic: movie.topic,
-      type: movie.genre,
+      type: movie.type,
+      genre: movie.genre,
       description: movie.description,
       runTime: movie.runTime,
       writer: movie.director,
-      actor: [], // Assuming actors are not updated here
-      comments: [], // Assuming comments are not updated here
+      actor: [],
+      comments: [],
       status: movie.status,
       linkVideo: movie.linkVideo,
+      language: movie.language,
+      origin: movie.origin,
     };
-    const result = updateFilm(id, updatedFilm);
+    const result = await updateFilm(id, updatedFilm);
     if (result) {
       alert(result.message);
       navigate("/admin/list-film");
     } else {
-      alert(result.message);
+      alert("Update film failed. Please try again.");
     }
   };
 
@@ -143,15 +153,18 @@ export default function UpdateFilm() {
                           </td>
                         </tr>
                         <tr>
-                          <th>Topic</th>
+                          <th>Type</th>
                           <td>
                             <Form.Control
-                              type="text"
-                              placeholder="Enter topic"
-                              name="topic"
-                              value={movie.topic}
+                              as="select"
+                              name="type"
+                              value={movie.type}
                               onChange={handleChange}
-                            />
+                            >
+                              <option value="">Select type</option>
+                              <option value="phim-le">Phim lẻ</option>
+                              <option value="phim-bo">Phim bộ</option>
+                            </Form.Control>
                           </td>
                         </tr>
                         <tr>
@@ -170,12 +183,51 @@ export default function UpdateFilm() {
                           <th>Genre</th>
                           <td>
                             <Form.Control
-                              type="text"
-                              placeholder="Enter genre"
+                              as="select"
                               name="genre"
                               value={movie.genre}
                               onChange={handleChange}
-                            />
+                            >
+                              <option value="">Select genre</option>
+                              {genres.map((genre, index) => (
+                                <option key={index} value={genre.value}>
+                                  {genre.label}
+                                </option>
+                              ))}
+                            </Form.Control>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Origin</th>
+                          <td>
+                            <Form.Control
+                              as="select"
+                              name="origin"
+                              value={movie.origin}
+                              onChange={handleChange}
+                            >
+                              <option value="">Select origin</option>
+                              {origins.map((origin, index) => (
+                                <option key={index} value={origin.value}>
+                                  {origin.label}
+                                </option>
+                              ))}
+                            </Form.Control>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Language</th>
+                          <td>
+                            <Form.Control
+                              as="select"
+                              name="language"
+                              value={movie.language}
+                              onChange={handleChange}
+                            >
+                              <option value="">Select language</option>
+                              <option value="phu-de">Phụ đề</option>
+                              <option value="thuyet-minh">Thuyết minh</option>
+                            </Form.Control>
                           </td>
                         </tr>
                         <tr>
@@ -183,7 +235,7 @@ export default function UpdateFilm() {
                           <td>
                             <Form.Control
                               type="number"
-                              placeholder="Enter time video"
+                              placeholder="Enter run time"
                               name="runTime"
                               value={movie.runTime}
                               onChange={handleChange}
@@ -199,8 +251,8 @@ export default function UpdateFilm() {
                               value={movie.status}
                               onChange={handleChange}
                             >
-                              <option>Released</option>
-                              <option>Unreleased</option>
+                              <option value="Released">Released</option>
+                              <option value="Unreleased">Unreleased</option>
                             </Form.Control>
                           </td>
                         </tr>

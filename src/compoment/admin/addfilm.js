@@ -19,13 +19,14 @@ import { Link, useNavigate } from "react-router-dom";
 import HeaderAdmin from "./headerAdmin";
 import Menu from "./Menu";
 import { createFilm } from "../../actions/film";
-
+import genres from "../../dataSource/genres.json";
+import origins from "../../dataSource/origins.json";
 export default function AddMovie() {
   const navigate = useNavigate();
   const [movie, setMovie] = useState({
     poster: "",
     title: "",
-    topic: "",
+    type: "",
     director: "",
     genre: "",
     status: "Unreleased",
@@ -33,6 +34,8 @@ export default function AddMovie() {
     description: "",
     linkVideo: "",
     runTime: "",
+    language: "",
+    origin: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,8 +49,8 @@ export default function AddMovie() {
       nameFilm: movie.title,
       evaluate: 10,
       releaseDate: movie.releaseDate,
-      topic: movie.topic,
-      type: movie.genre,
+      type: movie.type,
+      genre: movie.genre,
       description: movie.description,
       runTime: movie.runTime,
       writer: movie.director,
@@ -55,6 +58,8 @@ export default function AddMovie() {
       comments: [],
       status: movie.status,
       linkVideo: movie.linkVideo,
+      language: movie.language,
+      origin: movie.origin,
     };
     const result = createFilm(newFilm);
     if (result) {
@@ -63,7 +68,7 @@ export default function AddMovie() {
       setMovie({
         poster: "",
         title: "",
-        topic: "",
+        type: "",
         director: "",
         genre: "",
         status: "Unreleased",
@@ -71,6 +76,8 @@ export default function AddMovie() {
         description: "",
         linkVideo: "",
         runTime: "",
+        language: "",
+        origin: "",
       });
     } else {
       alert(result.message);
@@ -129,11 +136,11 @@ export default function AddMovie() {
                     >
                       <tbody>
                         <tr>
-                          <th>Title</th>
+                          <th>Tên Phim</th>
                           <td>
                             <Form.Control
                               type="text"
-                              placeholder="Enter title"
+                              placeholder="Nhập tên phim"
                               name="title"
                               value={movie.title}
                               onChange={handleChange}
@@ -141,23 +148,26 @@ export default function AddMovie() {
                           </td>
                         </tr>
                         <tr>
-                          <th>Topic</th>
+                          <th>Hình thức</th>
                           <td>
                             <Form.Control
-                              type="text"
-                              placeholder="Enter topic"
-                              name="topic"
-                              value={movie.topic}
+                              as="select"
+                              name="type"
+                              value={movie.type}
                               onChange={handleChange}
-                            />
+                            >
+                              <option value="">Chọn hình thức</option>
+                              <option value={"phim-le"}>Phim lẻ</option>
+                              <option value={"phim-bo"}>Phim bộ</option>
+                            </Form.Control>
                           </td>
                         </tr>
                         <tr>
-                          <th>Director</th>
+                          <th>Đạo diễn</th>
                           <td>
                             <Form.Control
                               type="text"
-                              placeholder="Enter director"
+                              placeholder="Nhập tên đạo diễn"
                               name="director"
                               value={movie.director}
                               onChange={handleChange}
@@ -165,23 +175,63 @@ export default function AddMovie() {
                           </td>
                         </tr>
                         <tr>
-                          <th>Genre</th>
+                          <th>Thể loại</th>
                           <td>
                             <Form.Control
-                              type="text"
-                              placeholder="Enter genre"
+                              as="select"
                               name="genre"
                               value={movie.genre}
                               onChange={handleChange}
-                            />
+                            >
+                              <option value="">Chọn thể loại</option>
+                              {genres.map((el, index) => (
+                                <option key={index} value={el.value}>
+                                  {el.label}
+                                </option>
+                              ))}
+                            </Form.Control>
                           </td>
                         </tr>
                         <tr>
-                          <th>Run Time</th>
+                          <th>Quốc gia</th>
+                          <td>
+                            <Form.Control
+                              as="select"
+                              name="origin"
+                              value={movie.origin}
+                              onChange={handleChange}
+                            >
+                              <option value="">Chọn quốc gia</option>
+                              {origins.map((el, index) => (
+                                <option key={index} value={el.value}>
+                                  {el.label}
+                                </option>
+                              ))}
+                            </Form.Control>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Ngôn ngữ</th>
+                          <td>
+                            <Form.Control
+                              as="select"
+                              name="language"
+                              value={movie.language}
+                              onChange={handleChange}
+                            >
+                              <option value="">Chọn ngôn ngữ</option>
+
+                              <option value={"phu-de"}>Phụ đề</option>
+                              <option value={"thuyet-minh"}>Thuyết minh</option>
+                            </Form.Control>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Thời lượng</th>
                           <td>
                             <Form.Control
                               type="number"
-                              placeholder="Enter time video"
+                              placeholder="Thời lượng"
                               name="runTime"
                               value={movie.runTime}
                               onChange={handleChange}
@@ -189,7 +239,7 @@ export default function AddMovie() {
                           </td>
                         </tr>
                         <tr>
-                          <th>Status</th>
+                          <th>Trạng thái</th>
                           <td>
                             <Form.Control
                               as="select"
@@ -203,7 +253,7 @@ export default function AddMovie() {
                           </td>
                         </tr>
                         <tr>
-                          <th>Release Date</th>
+                          <th>Ngày ra mắt</th>
                           <td>
                             <Form.Control
                               type="date"
@@ -214,11 +264,11 @@ export default function AddMovie() {
                           </td>
                         </tr>
                         <tr>
-                          <th>Description</th>
+                          <th>Miêu tả</th>
                           <td>
                             <Form.Control
                               as="textarea"
-                              placeholder="Enter description"
+                              placeholder="Miêu tả..."
                               name="description"
                               value={movie.description}
                               onChange={handleChange}
@@ -230,7 +280,7 @@ export default function AddMovie() {
                           <td>
                             <Form.Control
                               type="text"
-                              placeholder="Enter link video"
+                              placeholder="Link Video"
                               name="linkVideo"
                               value={movie.linkVideo}
                               onChange={handleChange}
