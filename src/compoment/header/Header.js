@@ -6,6 +6,8 @@ import {
   NavDropdown,
   Button,
   Image,
+  FormControl,
+  Form,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
@@ -16,12 +18,17 @@ import originFilm from "../../dataSource/origins.json";
 const Header = () => {
   const user = loadFromLocalstorage("user");
   const navigate = useNavigate();
-
+  const [searchQuery, setSearchQuery] = useState("");
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
-
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -53,6 +60,20 @@ const Header = () => {
                 ))}
               </NavDropdown>
             </Nav>
+            <Form className="d-flex me-auto" onSubmit={handleSearch}>
+              <FormControl
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button type="submit" style={{ backgroundColor: "red" }}>
+                Search
+              </Button>
+            </Form>
+            <Nav></Nav>
             <Nav>
               {user ? (
                 <NavDropdown

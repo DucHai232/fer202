@@ -33,7 +33,7 @@
       }
     ],
     "status": "Released",
-    "linkVideo": "https://example.com/film-1",
+    "linkVideo": "https://www.youtube.com/embed/6ixB91OvA00?si=3L1-chDoF6-BgG1f",
     "language": "phu-de",
     "origin": "usa"
   },
@@ -71,7 +71,7 @@
       }
     ],
     "status": "Released",
-    "linkVideo": "https://example.com/film-2",
+    "linkVideo": "https://www.youtube.com/embed/Y9DBERhBSAs?si=ycbfqNvlcbUAoBuQ",
     "language": "phu-de",
     "origin": "uk"
   },
@@ -129,7 +129,7 @@
       }
     ],
     "status": "Unreleased",
-    "linkVideo": "https://example.com/film-3",
+    "linkVideo": "https://www.youtube.com/embed/hDuttHj9WWw?si=_tUAToEkn0HCS78E",
     "language": "phu-de",
     "origin": "usa"
   },
@@ -167,7 +167,7 @@
       }
     ],
     "status": "Released",
-    "linkVideo": "https://example.com/film-4",
+    "linkVideo": "https://www.youtube.com/embed/s7lY5w51a8c?si=8e_J10PhAsA1OML1",
     "language": "phu-de",
     "origin": "usa"
   },
@@ -205,7 +205,7 @@
       }
     ],
     "status": "Released",
-    "linkVideo": "https://example.com/film-5",
+    "linkVideo": "https://www.youtube.com/embed/nCoBpyj7qz4?si=jnUwYoOuPVc8IP5W",
     "language": "thuyet-minh",
     "origin": "china"
   },
@@ -251,7 +251,7 @@
       }
     ],
     "status": "Released",
-    "linkVideo": "https://example.com/film-6",
+    "linkVideo": "https://www.youtube.com/embed/aiaEpzwiFjA?si=U_q59Wmit94J5gIx",
     "language": "phu-de",
     "origin": "usa"
   },
@@ -273,7 +273,7 @@
       }
     ],
     "status": "Released",
-    "linkVideo": "https://www.youtube.com/watch?v=DKoFH6NPkSM",
+    "linkVideo": "https://www.youtube.com/embed/Bw6Y4i2PE68?si=WQi-PAXeULBzfrVO",
     "id": "film-7",
     "language": "phu-de",
     "origin": "vietnam"

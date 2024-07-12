@@ -15,6 +15,7 @@ import Footer from "../footer/Footer";
 import { getFilms } from "../../actions/film";
 import genres from "../../dataSource/genres.json";
 import origins from "../../dataSource/origins.json";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Search() {
   const [films, setFilms] = useState([]);
@@ -27,10 +28,17 @@ export default function Search() {
   const query = useQuery();
   const initialQuery = query.get("q") || "";
   const [searchQuery, setSearchQuery] = useState(initialQuery);
-
+  const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     setFilms(getFilms());
   }, []);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const q = queryParams.get("q") || "";
+    setSearchQuery(q);
+  }, [location.search]);
 
   useEffect(() => {
     const filterMovies = () => {
@@ -67,6 +75,7 @@ export default function Search() {
 
     setResults(filterMovies());
   }, [
+    initialQuery,
     searchQuery,
     films,
     selectedGenre,
@@ -78,6 +87,7 @@ export default function Search() {
 
   const handleClearSearchQuery = () => {
     setSearchQuery("");
+    navigate("/search");
   };
 
   return (
