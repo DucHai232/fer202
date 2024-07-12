@@ -185,7 +185,14 @@ export default function Search() {
             <Row style={{ justifyContent: "center", marginTop: "50px" }}>
               {results.length > 0 ? (
                 results.map((film) => (
-                  <Col xs={6} md={2} lg={2} key={film.id}>
+                  <Col
+                    xs={6}
+                    md={2}
+                    lg={2}
+                    key={film.id}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate(`/chitiet/${film.id}`)}
+                  >
                     <Card className="bg-dark text-white">
                       <Card.Img src={film.image} />
                       <Card.ImgOverlay>
